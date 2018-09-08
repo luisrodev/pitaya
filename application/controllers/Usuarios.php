@@ -8,8 +8,8 @@ class Usuarios extends CI_Controller{
         
         $this->load->database();
         $this->load->model('UsersModel');
-        $this->data['titulo'] = 'Usuarios';
-        $this->load->view('template/header', $this->data);
+        //$this->data['titulo'] = 'Usuarios';
+        $this->load->view('template/header');
     }
     
     public function index(){
@@ -20,14 +20,14 @@ class Usuarios extends CI_Controller{
 
         
         //$data['saludo'] = "Hola weon como estas?";
-        $this->data['saludo'] = "Hola viajero vienes en busca de CRUD USUARIOS";
-        $this->load->view('usuarios/index', $this->data);
+        // $this->data['saludo'] = "Hola viajero vienes en busca de CRUD USUARIOS";
+        $this->load->view('usuarios/index');
         $this->_footering();
         //$this->load->view('template/header', $data);
     }
 
     public function sayHi(){
-        $this->data['saludo'] = "HOLA HOLA, THIS IS JUST A FUCKING SALUDO";
+        // $this->data['saludo'] = "HOLA HOLA, THIS IS JUST A FUCKING SALUDO";
         //$data['saludo'] = "HIHIHIHI";
         $this->load->view('usuarios/index', $this->data);
         $this->_footering();
@@ -35,8 +35,9 @@ class Usuarios extends CI_Controller{
 
     public function show(){
         $this->data['users'] = $this->UsersModel->getUsers();
-        $this->data['title'] = "Listado Usuarios";
-        $this->data['saludo'] = "Hola viajero que buscas los datos de los usuarios";
+        $this->data['titulo'] = "Gestión Usuarios";
+        // $this->data['saludo'] = "Hola viajero que buscas los datos de los usuarios";
+        // echo json_encode($this->data['users']);
         $this->load->view('usuarios/listado', $this->data);
         $this->_footering();
     }
@@ -75,7 +76,7 @@ class Usuarios extends CI_Controller{
         //echo $data;
 
         $restul = $this->UsersModel->agregarUsuario($data);
-
+        
         if($restul != FAlSE){
             $returnered = array(
                 'ok' => true,

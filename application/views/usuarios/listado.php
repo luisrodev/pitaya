@@ -2,17 +2,35 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-    <h2><?php echo $saludo; ?></h2>
+    <h1><?php echo $titulo;?></h1>
+    <hr>
 
-    <button type="button" id="btnAgregar" data-toggle="modal" data-target="#agregarModal" class="btn btn-primary">Agregar nuevo usuario</button>
+    <div class="row">
+        <div class="col-md-1">
+            <button type="button" id="btnAgregar" data-toggle="modal" data-target="#agregarModal" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Agregar
+            </button>
+        </div>
+        <div class="col-md-11">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Nombre Usuario" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button" id="button-addon2">
+                        <i class="fas fa-search"></i>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <table class="table table-hover table-sm" style="margin-top: 15px;">
+    <table class="table table-hover" >
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Nombre Usuario</th>
-                <th scope="col">Contraseña</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Rol</th>
                 <th scope="col">Accion</th>
@@ -25,11 +43,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <th scope="row"><?php echo $user->idusuario;?></th>
                 <td><?php echo $user->nombre;?></td>
                 <td><?php echo $user->username;?></td>
-                <td><?php echo $user->password;?></td>
+                
                 <td><?php echo $user->email;?></td>
                 <td><?php echo $user->rol;?></td>
-                <td>
-                    <div class="dropdown">
+                <td>                    
+                    <button type="button" onclick="eliminar(<?php echo $user->idusuario;?>)" class="btn btn-outline-danger">
+                    
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-success">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <!-- <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="accionDropdown<?php echo $user->idusuario;?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Accion
                         </button>
@@ -37,13 +62,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <a class="dropdown-item" onclick="eliminar(<?php echo $user->idusuario;?>);" href="#">Eliminar</a>
                             <a class="dropdown-item" href="#">Editar</a>
                         </div>
-                    </div>
+                    </div> -->
                 </td>
             </tr>
             <?php }?>  
         </tbody>
-     
-   </table>
+    
+    </table>
+
 
 
    <!-- Modal -->
