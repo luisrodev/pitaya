@@ -33,6 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <th scope="col">Nombre Usuario</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Rol</th>
+                <th scope="col">Fecha Creacion</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Accion</th>
             </tr> 
         </thead>
@@ -46,6 +48,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
                 <td><?php echo $user->email;?></td>
                 <td><?php echo $user->rol;?></td>
+                <td><?php echo $user->fecha_creacion;?></td>
+                <td><?php echo ($user->active == 1)? "Activo": "Inactivo";?></td>
                 <td>                    
                     <button type="button" onclick="eliminar(<?php echo $user->idusuario;?>)" class="btn btn-outline-danger">
                     
@@ -87,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" class="form-control" name="nombre">
+                        <input value="luis armando rubio" type="text" id="nombre" class="form-control" name="nombre">
                     </div>
                 </div>
                 
@@ -97,13 +101,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="username">Nombre Usuario</label>
-                        <input type="text" id="username" class="form-control" name="username">
+                        <input value="luirting" type="text" id="username" class="form-control" name="username">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password">Contraseña</label>
-                        <input type="text" id="password" class="form-control" name="password">
+                        <input value="luislaro" type="text" id="password" class="form-control" name="password">
                     </div>
                 </div>
                 <!-- <div class="col-md-6">
@@ -120,7 +124,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email">Correo Electronico</label>
-                        <input type="email" id="email" class="form-control" name="email">
+                        <input value="luirting@gmail.com" type="email" id="email" class="form-control" name="email">
                     </div>
                 </div>
 
@@ -129,10 +133,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <label for="rol">Rol</label>
                         <!-- <input type="rol" id="rol" class="form-control" name="rol"> -->
                         <select name="rol" id="rol" class="form-control">
-                            <option value="administrador">administrador</option>
-                            <option value="gerente">gerente</option>
-                            <option value="empleado">empleado</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="gerente">Gerente</option>
+                            <option value="empleado">Empleado</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="checkActivo">
+                        <label class="form-check-label" for="checkActivo">Activo</label>
                     </div>
                 </div>
             </div>

@@ -20,22 +20,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Custom styles for this template -->
     <!-- <link href="signin.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="<?php echo base_url("assets/css/login.css"); ?>" />
+    <script type="text/javascript" src="<?php echo base_url("assets/js/jquery.js"); ?>"></script>
+    <!-- <script type="text/javascript" src="<?php echo base_url("assets/js/login.js"); ?>"></script> -->
   </head>
 
   <body class="text-center">
-    <form class="form-signin">
+    <form method="post" class="form-signin" action="<?php echo base_url('Login/logIn')?>">
       <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Autentificar</h1>
       <label for="inputEmail" class="sr-only">Nombre Usuario</label>
-      <input style="margin-bottom: 5px;" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input name="username" style="margin-bottom: 5px;" type="text" id="inputUsername" class="form-control" placeholder="Nombre Usuario" required autofocus>
       <label for="inputPassword" class="sr-only">Contraeña</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
       <!-- <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div> -->
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+      <button  class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
       <!-- <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p> -->
     </form>
   </body>

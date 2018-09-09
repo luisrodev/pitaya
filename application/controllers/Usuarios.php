@@ -2,17 +2,40 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Usuarios extends CI_Controller{
-
+    
     function __Construct(){
         parent::__Construct();
-        
+        // header('Access-Control-Allow-Origin: *');
+        // header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        // header('Access-Control-Allow-Origin: *');
         $this->load->database();
         $this->load->model('UsersModel');
         //$this->data['titulo'] = 'Usuarios';
         $this->load->view('template/header');
     }
-    
+
+    private function clearSession()
+    {
+        $this->session->unset_userdata('isLog');
+        $this->session->unset_userdata('nombre');
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('rol');
+    }
+
     public function index(){
+
+        if(!$this->session->userdata('isLog')){
+            redirect('login');
+        }
+
+        $sidenav = array(
+            'headName' => 'Consultas',
+            'items' => [
+                'icon' => 'search',
+                'name' => 'Busqueda Productos Y Proveedores'
+            ]
+        );
+        
 
         if(! file_exists(APPPATH.'views/usuarios/index.php')){
             show_404();
@@ -27,9 +50,10 @@ class Usuarios extends CI_Controller{
     }
 
     public function sayHi(){
+        $this->clearSession();
         // $this->data['saludo'] = "HOLA HOLA, THIS IS JUST A FUCKING SALUDO";
         //$data['saludo'] = "HIHIHIHI";
-        $this->load->view('usuarios/index', $this->data);
+        $this->load->view('usuarios/index');
         $this->_footering();
     }
 
@@ -63,17 +87,28 @@ class Usuarios extends CI_Controller{
     }
 
     public function agregarUsuario(){
+        // $isActive = 0;
+        // echo $this->input->post('active');
+        // if($this->input->post('active') == "true"){
+        //     $isActive = 1;
+        // }
 
-        // $data = array(
-        //     'nombre' => $this->input->post('nombre'),
-        //     'username' => $this->input->post('username'),
-        //     'password' => $this->input->post('password'),
-        //     'email' => $this->input->post('email'),
-        //     'rol' => $this->input->post('rol')
-        // );
+        // echo $isActive;
 
-        $data = $this->input->post('data');
-        //echo $data;
+        // echo ($this->input->post('active'))? 1 : 0;
+        $data = array(
+            'nombre' => $this->input->post('nombre'),
+            'username' => $this->input->post('username'),
+            'password' => $this->input->post('password'),
+            'email' => $this->input->post('email'),
+            'rol' => $this->input->post('rol'),
+            'fecha_creacion' => date('Y-m-d H:i:s'),
+             'active' => ($this->input->post('active') == "true")? 1 : 0
+            //'active' => $isActive
+        );
+
+        // $data = $this->input->post('data');
+        // echo $data;
 
         $restul = $this->UsersModel->agregarUsuario($data);
         

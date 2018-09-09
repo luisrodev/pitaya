@@ -31,21 +31,30 @@ function agregarUsuario(){
     var _password = $('#password').val();
     var _email = $('#email').val();
     var _rol = $('#rol').val();
+    var _active = $('#checkActivo').prop('checked');
 
     var _data = {
         nombre:  _nombre,
         username: _username,
         password: _password,
         email: _email,
-        rol: _rol
+        rol: _rol,
+        active: _active
     }
     
-    var dataToSend = JSON.stringify(_data)
+    console.log(_active);
     $.ajax({
-        url: 'http://localhost/pitaya/index.php/usuarios/agregarUsuario',
+        url: 'http://localhost/pitaya/usuarios/agregarUsuario',
         type: 'post',
         dataType: 'json',
-        data: {data: dataToSend},
+        data: {
+            nombre: _nombre,
+            username: _username,
+            password: _password,
+            email: _email,
+            rol: _rol,
+            active: _active
+        },
         
         success: function(response){
 
