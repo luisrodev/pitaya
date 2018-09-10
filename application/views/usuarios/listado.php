@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 Agregar
             </button>
         </div>
-        <div class="col-md-11">
+        <!-- <div class="col-md-11">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Nombre Usuario" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
@@ -22,8 +22,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
+    <br>
 
     <table class="table table-hover" >
         <thead>
@@ -38,41 +39,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <th scope="col">Accion</th>
             </tr> 
         </thead>
-        <tbody>
+        <tbody id="tablaUsuarios">
 
-            <?php foreach($users as $user){?>
-            <tr>
-                <th scope="row"><?php echo $user->idusuario;?></th>
-                <td><?php echo $user->nombre;?></td>
-                <td><?php echo $user->username;?></td>
-                
-                <td><?php echo $user->email;?></td>
-                <td><?php echo $user->rol;?></td>
-                <td><?php echo $user->fecha_creacion;?></td>
-                <td><?php echo ($user->active == 1)? "Activo": "Inactivo";?></td>
-                <td>                    
-                    <button type="button" onclick="eliminar(<?php echo $user->idusuario;?>)" class="btn btn-outline-danger">
-                    
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-success">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                    <!-- <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="accionDropdown<?php echo $user->idusuario;?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Accion
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="accionDropdown<?php echo $user->idusuario;?>">
-                            <a class="dropdown-item" onclick="eliminar(<?php echo $user->idusuario;?>);" href="#">Eliminar</a>
-                            <a class="dropdown-item" href="#">Editar</a>
-                        </div>
-                    </div> -->
-                </td>
-            </tr>
-            <?php }?>  
+            
         </tbody>
     
     </table>
+
+    <!-- Modal Update -->
+    <div id="modalUpdate">
+        
+
+    </div>
 
 
 
@@ -91,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input value="luis armando rubio" type="text" id="nombre" class="form-control" name="nombre">
+                        <input value="" type="text" id="nombre" class="form-control" name="nombre">
                     </div>
                 </div>
                 
@@ -101,13 +79,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="username">Nombre Usuario</label>
-                        <input value="luirting" type="text" id="username" class="form-control" name="username">
+                        <input value="" type="text" id="username" class="form-control" name="username">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password">Contraseña</label>
-                        <input value="luislaro" type="text" id="password" class="form-control" name="password">
+                        <input value="" type="password" id="password" class="form-control" name="password">
                     </div>
                 </div>
                 <!-- <div class="col-md-6">
@@ -124,7 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email">Correo Electronico</label>
-                        <input value="luirting@gmail.com" type="email" id="email" class="form-control" name="email">
+                        <input value="" type="email" id="email" class="form-control" name="email">
                     </div>
                 </div>
 
@@ -132,10 +110,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <label for="rol">Rol</label>
                         <!-- <input type="rol" id="rol" class="form-control" name="rol"> -->
+
+
                         <select name="rol" id="rol" class="form-control">
-                            <option value="administrador">Administrador</option>
-                            <option value="gerente">Gerente</option>
-                            <option value="empleado">Empleado</option>
+
+                            <?php if($this->session->userdata('rol') === 'gerente'):?>
+                            <option value="Empleado">Empleado</option>
+                            <?php else: ?>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Gerente">Gerente</option>
+                            <option value="Empleado">Empleado</option>
+                            <?php endif; ?>
                         </select>
                     </div>
                 </div>
@@ -144,7 +129,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="checkActivo">
+                        <input checked type="checkbox" class="form-check-input" id="checkActivo">
                         <label class="form-check-label" for="checkActivo">Activo</label>
                     </div>
                 </div>
@@ -156,7 +141,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button onclick="agregarUsuario()" type="button" class="btn btn-primary">Guardar</button>
+            <button onclick="agregarUsuario()" type="button" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Guardar
+            </button>
         </div>
         </div>
     </div>

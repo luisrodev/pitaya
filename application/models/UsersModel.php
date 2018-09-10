@@ -11,6 +11,30 @@ class UsersModel extends CI_Model {
         return $query->result();
     }
 
+    function eliminarUsuario($id){
+        $this->db->set('active', 0);
+        $this->db->where('idusuario', $id);
+        // $success = $this->db->delete('usuarios');
+        $success = $this->db->update('usuarios');
+        return $success;
+    }
+
+    function actualizarUsuario($id, $data){
+
+        if($data['password'] != ""){
+            $this->db->set('password', $data['password']);
+        }
+        $this->db->set('nombre', $data['nombre']);
+        $this->db->set('username', $data['username']);
+        $this->db->set('email', $data['email']);
+        $this->db->set('rol', $data['rol']);
+        $this->db->set('active', $data['active']);
+
+        
+        $this->db->where('idusuario', $id);
+        return $this->db->update('usuarios');
+    }
+
     function agregarUsuario($d){
         //echo json_decode($d);
         // $data = array(

@@ -19,7 +19,9 @@ class Login extends CI_Controller{
         $this->load->view('login/index');
     }
 
-
+    public function cerrarSesion(){
+        $this->utilerias->cerrarSesion();
+    }
     
 
     public function logIn(){
@@ -41,13 +43,15 @@ class Login extends CI_Controller{
             //redirect('usuarios', 'refresh');
             //echo json_encode("Log");
             $this->session->set_userdata('isLog', 'true');
+            $this->session->set_userdata('id', $res['data']['idusuario']);
             $this->session->set_userdata('nombre', $res['data']['nombre']);
             $this->session->set_userdata('username', $res['data']['username']);
             $this->session->set_userdata('rol', $res['data']['rol']);
 
 
 
-            redirect('Usuarios/show');
+            //redirect('Usuarios');
+            redirect('dashboard');
         }else{
             //echo "No se logeo";
             redirect('login');
