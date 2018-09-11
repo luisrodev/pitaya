@@ -13,6 +13,13 @@ class ProveedoresModel extends CI_Model{
         return $query->result();
     }
 
+    function getProveedores(){
+        $this->db->select('idproveedor, nombre');
+        $this->db->where('active', 1);
+        
+        return $this->db->get('proveedores')->result();
+    }
+
     function agregarProveedor($data){
 
         return $this->db->insert('proveedores', $data);
