@@ -1,0 +1,9 @@
+Busqueda Proveedores
+    -Mandar una baja de un proveedor.
+
+Solicitudes
+    -Mostrar las solicitudes, organizandolas de pendiendes primero.
+    -Opcion de aceptar o declinar una solicitud a baja o alta.
+
+
+VALIDAR TODOS LOS CAMPOS.

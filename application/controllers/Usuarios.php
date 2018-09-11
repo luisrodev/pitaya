@@ -121,12 +121,12 @@ class Usuarios extends CI_Controller{
                         array(
                             'icon' => 'search',
                             'name' => ' Busqueda Productos ',
-                            'to' => 'http://localhost/pitaya/productos'
+                            'to' => 'http://localhost/pitaya/busqueda/productos'
                         ),
                         array(
                             'icon' => 'search',
                             'name' => ' Busqueda Proveedores ',
-                            'to' => 'http://youtube.com'
+                            'to' => 'http://localhost/pitaya/busqueda/proveedores'
                         ),
                     )
                 )));
@@ -139,6 +139,7 @@ class Usuarios extends CI_Controller{
 
     public function index(){
 
+        $this->utilerias->validarRol('Administrador', 'Gerente');
         
         
 

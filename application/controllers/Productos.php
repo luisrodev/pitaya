@@ -24,6 +24,7 @@ class Productos extends CI_Controller{
 
 
     public function index(){
+        $this->utilerias->validarRol('Administrador', 'Gerente');
 
         if(! file_exists(APPPATH.'views/productos/index.php')){
             show_404();

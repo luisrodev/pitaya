@@ -13,6 +13,29 @@ class ProveedoresModel extends CI_Model{
         return $query->result();
     }
 
+    function obtenerProveedoresBusqueda(){
+        $query = $this->db->query("select pro.idproveedor, pro.nombre, pro.ciudad, pro.estado, pro.telefono, pro.con_nombre, pro.con_email,
+        pro.con_telefono, pro.con_extension, tp.nombre as 'nombre_tipo'
+        from proveedores pro 
+        left join tipo_proveedor tp on tp.idtipo_proveedor = pro.fk_tipo
+        left join usuarios u1 on u1.idusuario = pro.fk_usuario_prove
+        left join usuarios u2 on u2.idusuario = pro.fk_usuario_aut
+        where pro.active = 1");
+        return $query->result();
+    }
+
+    function searchProveedor($cond){
+        $query = $this->db->query("select pro.idproveedor, pro.nombre, pro.ciudad, pro.estado, pro.telefono, pro.con_nombre, pro.con_email,
+        pro.con_telefono, pro.con_extension, tp.nombre as 'nombre_tipo'
+        from proveedores pro 
+        left join tipo_proveedor tp on tp.idtipo_proveedor = pro.fk_tipo
+        left join usuarios u1 on u1.idusuario = pro.fk_usuario_prove
+        left join usuarios u2 on u2.idusuario = pro.fk_usuario_aut
+        where pro.nombre LIKE '%".$cond."%' && pro.active = 1;");
+
+        return $query->result();
+    }
+
     function getProveedores(){
         $this->db->select('idproveedor, nombre');
         $this->db->where('active', 1);

@@ -21,6 +21,33 @@ class ProductosModel extends CI_Model{
         return $query->result();
     }
 
+    public function obtenerProductosBusqueda(){
+        $query = $this->db->query("select prod.idproducto, prod.nombre, prod.descripcion, prod.tiempo_respuesta, prod.capacidad_produccion, prod.lugar_entrega,
+        prod.fecha_creacion, prod.active, u1.nombre as 'nombre_usuario', prove.nombre as 'nombre_proveedor', prove.ciudad, prove.estado,
+        prove.con_nombre, prove.con_email, prove.con_telefono, prove.con_extension, tp.nombre as 'tipo'
+        from productos prod
+        left join proveedores prove on prove.idproveedor = prod.fk_proveedor
+        left join tipo_proveedor tp on tp.idtipo_proveedor = prove.fk_tipo
+        left join usuarios u1 on u1.idusuario = prod.fk_usuario_prod
+        where prod.active = 1;");
+
+        return $query->result();
+    }
+
+    public function searchProducto($cond){
+        $query = $this->db->query("select prod.idproducto, prod.nombre, prod.descripcion, prod.tiempo_respuesta, prod.capacidad_produccion, prod.lugar_entrega,
+        prod.fecha_creacion, prod.active, u1.nombre as 'nombre_usuario', prove.nombre as 'nombre_proveedor', prove.ciudad, prove.estado,
+        prove.con_nombre, prove.con_email, prove.con_telefono, prove.con_extension, tp.nombre as 'tipo'
+        from productos prod
+        left join proveedores prove on prove.idproveedor = prod.fk_proveedor
+        left join tipo_proveedor tp on tp.idtipo_proveedor = prove.fk_tipo
+        left join usuarios u1 on u1.idusuario = prod.fk_usuario_prod
+        where prod.nombre LIKE '%" .$cond."%' && prod.active = 1;");
+
+        return $query->result();
+
+    }
+
     function agregarProducto($data){
         return $this->db->insert('productos', $data);
     }
