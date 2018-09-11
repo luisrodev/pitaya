@@ -20,14 +20,32 @@ class ProveedoresModel extends CI_Model{
     }
 
     function eliminarProveedor($id){
-        $this->db->where('idtipo_proveedor', $id);
-        $query = $this->db->delete('tipo_proveedor');
+        $this->db->set('active', 0);
+        $this->db->where('idproveedor', $id);
+        $query = $this->db->update('proveedores');
+        // $query = $this->db->delete('tipo_proveedor');
         return $query;
     }
 
     function actualizarProveedor($id, $data){
-        $this->db->where('idtipo_proveedor', $id);
-        return $this->db->update('tipo_proveedor', $data);
+        $this->db->set('nombre', $data['nombre']);
+        $this->db->set('ciudad', $data['ciudad']);
+        $this->db->set('estado', $data['estado']);
+        $this->db->set('telefono', $data['telefono']);
+        $this->db->set('con_nombre', $data['con_nombre']);
+        $this->db->set('con_email', $data['con_email']);
+        $this->db->set('con_telefono', $data['con_telefono']);
+        $this->db->set('con_extension', $data['con_extension']);
+        $this->db->set('active', $data['active']);
+        $this->db->set('fk_tipo', $data['tipo']);
+        $this->db->set('fk_usuario_prove', $this->session->userdata('id'));
+        $this->db->set('fk_usuario_aut', $this->session->userdata('id'));
+
+        $this->db->where('idproveedor', $id);
+
+        return $this->db->update('proveedores');
+        // $this->db->where('idtipo_proveedor', $id);
+        // return $this->db->update('tipo_proveedor', $data);
     }
 
 }

@@ -30,7 +30,7 @@ function cargarProveedores(){
                         <i class="fas fa-trash-alt"></i>
                     </button>
 
-                    <button onclick="displayEditarProveedor('${data[i].idusuario}', '${data[i].nombre}', '${data[i].username}', '${data[i].email}', '${data[i].rol}', '${data[i].active}', '${response.rol}')" type="button" class="btn btn-outline-success">
+                    <button onclick="displayEditarProveedor('${data[i].idproveedor}', '${data[i].nombre}', '${data[i].ciudad}', '${data[i].estado}', '${data[i].telefono}', '${data[i].active}', '${data[i].con_nombre}', '${data[i].con_email}', '${data[i].con_telefono}', '${data[i].con_extension}', '${data[i].nombre_tipo}')" type="button" class="btn btn-outline-success">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
                 </td>
@@ -64,8 +64,160 @@ function cargarProveedores(){
     })
 }
 
-function displayEditarProveedor(){
+function cargarTiposProveedores(tipo){
+    var res;
+    $.ajax({
+        url: 'http://localhost/pitaya/proveedorestipo/getTiposActivos',
+        type: 'get',
+        dataType: 'json',
+        success: function(response){
+            console.log(response);
+            res = response;
+            var echtiemel = ``;
 
+            for(var i = 0; i < response.length; i++){
+                echtiemel += `<option ${(tipo == response[i].nombre)? 'selected="selected"':''} value="${response[i].idtipo_proveedor}">${response[i].nombre}</option>`;
+            }
+            $('#tipoUpdateProveedor').html(echtiemel);
+        },
+        error: function(err){
+            console.log(err);
+        }
+    })
+
+    return res;
+}
+
+function displayEditarProveedor(idproveedor, nombre, ciudad, estado, telefono, active, con_nombre, con_email, con_telefono, con_extension, tipo){
+    //console.log(cargarTiposProveedores());
+    var echtiemel = "";
+    // console.log(id);
+
+    echtiemel += `
+
+    <div class="modal" id="modificarProveedorModal" tabindex="-1" role="dialog" aria-labelledby="modificarProveedorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modificarProveedorModalLabel">Modificar Proveedor</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nombreUpdateProveedor">Nombre</label>
+                    <input value="${nombre}" type="text" id="nombreUpdateProveedor" class="form-control" name="nombre">
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ciudadUpdateProveedor">Ciudad</label>
+                    <input value="${ciudad}" type="text" id="ciudadUpdateProveedor" class="form-control" name="username">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estadoUpdateProveedor">Estado</label>
+                    <input value="${estado}" type="text" id="estadoUpdateProveedor" class="form-control" >
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="telefonoUpdateProveedor">Número Telefónico</label>
+                    <input value="${telefono}" type="number" id="telefonoUpdateProveedor" class="form-control" >
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tipoUpdateProveedor">Tipo Proveedor</label>
+                    <select class="form-control" name="rol" id="tipoUpdateProveedor">
+                        
+                    
+
+                    </select>
+                    
+                </div>
+            </div>
+
+            
+        </div>
+
+        
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombreContactoUpdateProveedor">Nombre Contacto</label>
+                    <input value="${con_nombre}" type="text" id="nombreContactoUpdateProveedor" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="emailContactoUpdateProveedor">Email Contacto</label>
+                    <input value="${con_email}" type="text" id="emailContactoUpdateProveedor" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="telefonoContactoUpdateProveedor">Telefono Contacto</label>
+                    <input value="${con_telefono}" type="text" id="telefonoContactoUpdateProveedor" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="extensionContactoUpdateProveedor">Extension Contacto</label>
+                    <input value="${con_extension}" type="text" id="extensionContactoUpdateProveedor" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group form-check">
+                    <input ${(active == 1)? "checked": ""} type="checkbox" class="form-check-input" id="checkActivoUpdateProveedor">
+                    <label class="form-check-label" for="checkActivoUpdateProveedor">Activo</label>
+                </div>
+            </div>
+        </div>
+
+            
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button onclick="editarProveedor('${idproveedor}')" type="button" class="btn btn-primary"> <i class="fas fa-save"></i> Guardar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    `;
+
+    //Se hace append
+    $('#modalUpdateProveedor').html(echtiemel);
+    cargarTiposProveedores(tipo);
+    $('#modificarProveedorModal').modal();
 }
 
 function displayInfo(con_nombre, con_email, con_telefono, con_extension, nombre_usuario_peticion, nombre_usuario_autorizo){
@@ -149,6 +301,15 @@ function agregarProveedor(){
         },
         success: function(response){
             console.log(response);
+
+            if(response.ok){
+                console.log("Si se agrego");
+                $('#agregarProveedorModal').modal('hide');
+                clearInputs();
+                cargarProveedores();
+            }else{
+                console.log("No se pudo agregar");
+            }
         },
         error: function(err){
             console.log(err);
@@ -158,16 +319,93 @@ function agregarProveedor(){
     
 }
 
-function editarProveedor(){
+function editarProveedor(id){
+    console.log("Quieres editar el proveedorcon ID: "+ id);
+    var _nombre = $('#nombreUpdateProveedor').val();
+    var _ciudad = $('#ciudadUpdateProveedor').val();
+    var _estado = $('#estadoUpdateProveedor').val();
+    var _telefono = $('#telefonoUpdateProveedor').val();
+    var _tipo = $('#tipoUpdateProveedor').val();
+    var _con_nombre = $('#nombreContactoUpdateProveedor').val();
+    var _con_email = $('#emailContactoUpdateProveedor').val();
+    var _con_telefono = $('#telefonoContactoUpdateProveedor').val();
+    var _con_extension = $('#extensionContactoUpdateProveedor').val();
+    var _active = $('#checkActivoUpdateProveedor').prop('checked');
+
+
+    $.ajax({
+        url: 'http://localhost/pitaya/proveedores/editarProveedor',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            id,
+            nombre: _nombre,
+            ciudad: _ciudad,
+            estado: _estado,
+            telefono: _telefono,
+            con_nombre: _con_nombre,
+            con_email: _con_email,
+            con_telefono: _con_telefono,
+            con_extension: _con_extension,
+            active: _active,
+            tipo: _tipo
+        },
+        success: function(response){
+            console.log(response);
+
+            if(response){
+                $('#modificarProveedorModal').modal('hide');
+                cargarProveedores();
+            }
+        },
+        error: function(err){
+            console.log(err);
+        }
+    })
 
 }
 
-function eliminarProveedor(){
+function eliminarProveedor(idProveedor){
+
+    $.ajax({
+        url: 'http://localhost/pitaya/proveedores/eliminarProveedor',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            id: idProveedor
+        },
+        success: function(response){
+            console.log(response);
+            if(response)
+                cargarProveedores();
+        },
+        error: function(err){
+            console.log(err);
+        }
+
+    })
 
 }
 
 function clearInputs(){
+    // $('#nombreProveedor').val('');
+    // $('#username').val('');
+    // $('#password').val('');
+    // $('#email').val('');
+    // $('#rol option[value="administrador"]').attr('selected', true);
+    // $('#checkActivo').prop('checked');
 
+
+    $('#nombreProveedor').val('');
+    $('#ciudadProveedor').val('');
+    $('#estadoProveedor').val('');
+    $('#telefonoProveedor').val('');
+    $('#checkActivoProveedor').prop('checked');
+    $('#nombreContactoProveedor').val('');
+    $('#emailContactoProveedor').val('');
+    $('#telefonoContactoProveedor').val('');
+    $('#extensionContactoProveedor').val('');
+    // $('#tipoProveedor option[value="Cableado"]').attr('selected', true);
 }
 
 cargarProveedores();

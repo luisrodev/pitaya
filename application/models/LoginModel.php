@@ -12,6 +12,7 @@ class LoginModel extends CI_Model{
         if($query->num_rows() == 1 && $query->row()->active){
             //isLoged
             $datos = array(
+                'idusuario' => $query->row()->idusuario,
                 'nombre' => $query->row()->nombre,
                 'username' => $query->row()->username,
                 'rol' => $query->row()->rol

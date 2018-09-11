@@ -144,6 +144,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label for="tipoProveedor">Tipo Proveedor</label>
                     <select class="form-control" name="rol" id="tipoProveedor">
                         <!--TODO: Iterar una query de los tipos de proveedores para agregarlos como opciones -->
+                        <?php foreach($tipos as $tipo){ ?>
+
+                        <option value="<?php echo $tipo->idtipo_proveedor;?>"><?php echo $tipo->nombre;?></option>
+
+                        <?php } ?>
+
                     </select>
                     
                 </div>
@@ -189,8 +195,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group form-check">
-                    <input checked type="checkbox" class="form-check-input" id="checkActivopProveedor">
-                    <label class="form-check-label" for="checkActivopProveedor">Activo</label>
+                    <input checked type="checkbox" class="form-check-input" id="checkActivoProveedor">
+                    <label class="form-check-label" for="checkActivoProveedor">Activo</label>
                 </div>
             </div>
         </div>

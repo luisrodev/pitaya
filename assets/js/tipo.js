@@ -152,6 +152,7 @@ function editarTipo(id){
 
 function clearInputs(){
     $('#nombreTipo').val('');
+    $('#checkActivoTipo').prop('checked');
 }
 
 function agregarTipo(){

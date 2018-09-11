@@ -55,6 +55,11 @@ class ProveedoresTipo extends CI_Controller{
 
     }
 
+    public function getTiposActivos(){
+        echo json_encode($this->ProveedoresTipoModel->obtenerTiposActivos());
+        die();
+    }
+
     public function agregarTipo(){
         $data = array(
             'nombre' => $this->input->post('nombre'),

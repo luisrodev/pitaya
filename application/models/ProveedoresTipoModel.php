@@ -9,6 +9,12 @@ class ProveedoresTipoModel extends CI_Model{
         return $query->result();
     }
 
+    function obtenerTiposActivos(){
+        $this->db->where('active', 1);
+        $query = $this->db->get('tipo_proveedor');
+        return $query->result();
+    }
+
     function agregarTipo($data){
 
         return $this->db->insert('tipo_proveedor', $data);

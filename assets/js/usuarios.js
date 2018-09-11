@@ -241,16 +241,16 @@ function agregarUsuario(){
     var _rol = $('#rol').val();
     var _active = $('#checkActivo').prop('checked');
 
-    var _data = {
-        nombre:  _nombre,
-        username: _username,
-        password: _password,
-        email: _email,
-        rol: _rol,
-        active: _active
-    }
+    // var _data = {
+    //     nombre:  _nombre,
+    //     username: _username,
+    //     password: _password,
+    //     email: _email,
+    //     rol: _rol,
+    //     active: _active
+    // }
     
-    console.log(_active);
+    // console.log(_active);
     $.ajax({
         url: 'http://localhost/pitaya/usuarios/agregarUsuario',
         type: 'post',
